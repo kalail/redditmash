@@ -23,14 +23,27 @@ $(document).ready(function() {
   messageField.attr("disabled", "true");
   messageField.attr("placeholder", "Enter a name to continue");
 
-  channel = connect();
+  try
+  {
+    channel = connect();
+  } catch(ReferenceError) { }
 
   // adds pseudo classes to the post titles. Because they are created dynamically
   // in pseudo classes, they must be added with javascript
-  $('i').each(function(idx) {
+  /*$('i').each(function(idx) {
     if($(this).data('css') != null)
       document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
-  })
+  });*/
+
+  // adds highlight to navbar link
+  if(/rankings/.exec(window.location.pathname))
+  {
+    $("#navbar-compare").addClass("selected");
+    $("#navbar-rankings").addClass("deselected");
+  } else {
+    $("#navbar-rankings").addClass("selected");
+    $("#navbar-compare").addClass("deselected");
+  }
 
 });
 
