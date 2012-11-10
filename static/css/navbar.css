@@ -35,13 +35,15 @@
     }
 
     nav ul li a.deselected{
-    border-left: 50px solid #4183c4;
-    color: #4183c4;
+    border-left: 50px solid #112436;
+    color: #3C444B;
+    text-decoration: none
     }
 
     nav ul li a.selected{
-    border-left: 50px solid #34526f;
-    color: #34526f;
+    border-left: 50px solid #7B9AB9;
+    color: #3C444B;
+    text-decoration: none
     }
 
     nav ul li a.scriptogram{

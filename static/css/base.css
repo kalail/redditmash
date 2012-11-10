@@ -28,7 +28,7 @@ header
 
 .letterpress h1 {
   display: block; text-decoration: none;
-  font: 70px Helvetica, Arial, Sans-Serif; letter-spacing: -5px;
+  font: 70px Helvetica, Arial, Sans-Serif; letter-spacing: -1px;
   text-align: center;
   color: #999; text-shadow: 0px 3px 8px #2a2a2a;
   margin-left: 27px;

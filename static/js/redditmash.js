@@ -29,14 +29,10 @@ $(document).ready(function() {
 
   // adds pseudo classes to the post titles. Because they are created dynamically
   // in pseudo classes, they must be added with javascript
-  $('i').each(function(idx) {
+  /*$('i').each(function(idx) {
     if($(this).data('css') != null)
-      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; font-size: 3px}', 0);
-      if($(this).data('title').length > 40)
-      {
-        // document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { font-size: 5px; }', 0);
-      }
-  });
+      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '";}', 0);
+  });*/
 
   // adds highlight to navbar link
   if(/rankings/.exec(window.location.pathname))
@@ -48,6 +44,8 @@ $(document).ready(function() {
     $("#navbar-compare").addClass("deselected");
   }
 
+  // set up the ajax with csrf tokens
+  prepare_ajax();
 
 });
 
@@ -138,17 +136,11 @@ function rightVoteButtonClicked() {
 }
 
 function submitVote(button, id) {
-  $.ajaxSetup ({
-        cache: false
-  });
-  var ajax_load = '<img src="/static/img/loader.gif" alt="Loading..." style="width: 24px">';
-  //  load() functions
-  var loadUrl = "/";
-  button.html(ajax_load).load(loadUrl, null, function(response, status, xhr) {
-    if (status == "error") {
-      var msg = "Sorry but there was an error: ";
-      $("#error").html(msg + xhr.status + " " + xhr.statusText);
-    } else {
+  $.ajax({
+    type: 'POST',
+    url: '/',
+    data: {winner_id: id},
+    success: function(msg) {
       location.reload();
     }
   });
