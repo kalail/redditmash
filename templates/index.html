@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <div class="content">
   <ul class="cbul">
     <li class="cbli">
-      <i class="icon title1"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/qChpi.jpg">
+      <i class="icon {{ post_1.data_value }}" data-css="{{ post_1.data_value }}" data-title="{{ post_1.title }}"></i>
+      <img class="cbimg page-curl shadow-bottom" src="{{ post_1.url }}">
       <a class="cba" id="left-vote-button" href="javascript: void(0)">Vote</a>
     </li>
     <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/MfeqL.jpg">
+      <i class="icon {{ post_2.data_value }}" data-css="{{ post_2.data_value }}" data-title="{{ post_2.title }}"></i>
+      <img class="cbimg page-curl shadow-bottom" src="{{ post_2.url }}">
       <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
     </li>
   </ul>

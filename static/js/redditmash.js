@@ -7,6 +7,7 @@ var hasBroadcastedJoined = false;
 var lastInsertedMessageTime = new Date(0);
 
 $(document).ready(function() {
+  // set up the event handlers for the voting buttons
   leftVoteButton = $("#left-vote-button");
   rightVoteButton = $("#right-vote-button");
   leftVoteButton.click(leftVoteButtonClicked);
