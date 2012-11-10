@@ -52,7 +52,7 @@
     position: relative;
     vertical-align: bottom;
     width: 400px;
-    height: 432px;
+    height: 456px;
     -webkit-filter: drop-shadow(0 2px 3px hsla(0,0%,0%,.25));
 }
 
@@ -67,6 +67,11 @@
     height: 271px;
 }
 
+.cbli h3
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
 .cbli:after,
 .cbli:before {
     background-color: #bbb;
