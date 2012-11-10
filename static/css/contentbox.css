@@ -6,6 +6,14 @@
     content: 'woohoo this hackathon is so fun go imo.im!!!';
 }
 
+.title-404:after {
+    content: 'Oh Crap! Nothing to see here!!';
+}
+
+.404-title:after {
+    content: 'Oh Crap! Nothing to see here!!';
+}
+
 .cbimg
 {
     height: 384px;
@@ -44,6 +52,12 @@
     height: 432px;
     -webkit-filter: drop-shadow(0 2px 3px hsla(0,0%,0%,.25));
 }
+
+.cbli-404
+{
+    width: 715px;
+}
+
 .cbli:after,
 .cbli:before {
     background-color: #bbb;
