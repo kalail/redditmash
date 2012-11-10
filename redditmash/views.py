@@ -53,7 +53,7 @@ def rankings(request):
 	for p in posts:
 		posts_send.append({
 			'title': p.title,
-			'data-value': hashlib.md5(p.title).hexdigest()[:7],
+			'data_value': hashlib.md5(p.title).hexdigest()[:7],
 			'url': p.url,
 		})
 
@@ -62,7 +62,7 @@ def rankings(request):
 	for p in reddit_posts:
 		reddit_posts_send.append({
 			'title': p.title,
-			'data-value': hashlib.md5(p.title).hexdigest()[:7],
+			'data_value': hashlib.md5(p.title).hexdigest()[:7],
 			'url': p.url,
 		})
 	return render_to_response('rankings.html', {'posts': posts_send, 'reddit_posts': reddit_posts_send}, context_instance=RequestContext(request))

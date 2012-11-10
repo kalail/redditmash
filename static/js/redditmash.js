@@ -24,7 +24,7 @@ $(document).ready(function() {
 
   $('i').each(function(idx) {
     if($(this).data('css') != null)
-      document.styleSheets[1].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
+      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
   })
 
 });
