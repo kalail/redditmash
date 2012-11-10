@@ -29,6 +29,7 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -93,6 +94,8 @@ INSTALLED_APPS = (
     'djcelery',
     'redditmash',
     'django_extensions',
+    'gunicorn',
+    'storages',
 )
 
 # Set up simple master logger
@@ -129,4 +132,8 @@ djcelery.setup_loader()
 CELERY_RESULT_BACKEND = 'redis'
 
 # Session settings
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+# S3 settings
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_STORAGE_BUCKET_NAME = 'redditmash_static'
