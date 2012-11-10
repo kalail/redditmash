@@ -17,10 +17,6 @@ header
   margin-left: 750px;
   width: 302px;
 }
-#content
-{
-    width: 1092;
-}
 
 .chat
 {
@@ -30,7 +26,7 @@ header
 .chatbox
 {
   overflow: scroll;
-  width: 1222px;
+  width: 844px !important;
 }
 
 .chat li
