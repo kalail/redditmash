@@ -1,26 +1,30 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="content-col">
-  <ul class="cbul">
-    {% for post in posts %}
-      <li class="cbli">
-        <i class="icon {{ post.data_value }}" data-css="{{ post.data_value }}" data-title="{{ post.title}}"></i>
-        <img class="cbimg page-curl shadow-bottom" src="{{post.url}}">
-        <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-      </li>
-    {% endfor %}
-  </ul>
-</div>
+<div class="content content-col-container">
+  <div class="content-col-1">
+    <div class="letterpress"><h1>Reddit Mash</h1></div>
+    <ul class="cbul">
+      {% for post in posts %}
+        <li class="cbli">
+          <i class="icon {{ post.data_value }}" data-css="{{ post.data_value }}" data-title="{{ post.title}}"></i>
+          <img class="cbimg page-curl shadow-bottom" src="{{post.url}}">
+          <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 
-<div class="content-col">
-  <ul class="cbul">
-    {% for post in reddit_posts %}
-      <li class="cbli">
-        <i class="icon {{ post.data_value}}" data-css="{{ post.data_value }}" data-title="{{ post.title }}"></i>
-        <img class="cbimg page-curl shadow-bottom" src="{{post.url}}">
-        <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-      </li>
-    {% endfor %}
-  </ul>
+  <div class="content-col-2">
+    <div class="letterpress"><h1>Reddit</h1></div>
+    <ul class="cbul">
+      {% for post in reddit_posts %}
+        <li class="cbli">
+          <i class="icon {{ post.data_value}}" data-css="{{ post.data_value }}" data-title="{{ post.title }}"></i>
+          <img class="cbimg page-curl shadow-bottom" src="{{post.url}}">
+          <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {% endblock content %}

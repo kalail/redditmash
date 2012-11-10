@@ -18,8 +18,37 @@ header
   width: 302px;
 }
 
-.content-col {
-    display: inline;
+/*.letterpress h1 {
+        color: #fff;
+        text-shadow: 0px 1px 0px #999, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+        font: 50px 'ChunkFiveRegular';
+        margin-left: 27px;
+        margin-bottom: -5px;
+}*/
+
+.letterpress h1 {
+  display: block; text-decoration: none;
+  font: 70px Helvetica, Arial, Sans-Serif; letter-spacing: -5px;
+  text-align: center;
+  color: #999; text-shadow: 0px 3px 8px #2a2a2a;
+  margin-left: 27px;
+ }
+.content-col-container
+{
+  margin-top: 65px !important;
+}
+
+.content-col-1 {
+    float: left;
+    height: 100%;
+    margin: 0 auto;
+    width: 400px;
+    position: absolute;
+    margin-right: 27px;
+}
+
+.content-col-2 {
+    float: right;
     height: 100%;
     margin: 0 auto;
     width: 400px;
