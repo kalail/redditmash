@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block js %}
-    <script src="https://apps.imoapi.com/imo.im/api/2/imoapi-min.js"></script>
+    <script src="{{STATIC_URL}}js/imoapi-min-custom.js"></script>
+    <script type="text/javascript">
+    var global_ch_id = {{ch_id}}
+    var global_u_id = {{u_id}}
+    </script>
 {% endblock js %}
 {% block content %}
 
