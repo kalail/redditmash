@@ -12,17 +12,21 @@ $(document).ready(function() {
   rightVoteButton = $("#right-vote-button");
   leftVoteButton.click(leftVoteButtonClicked);
   rightVoteButton.click(rightVoteButtonClicked);
-
+  // set up the event handlers for the chat boxes
+  // also enables validation on when the user is allowed to send a message
   nameField = $(".chat-input-name");
   messageField = $(".chat-input");
   nameField.keypress(onNameChanged);
   nameField.blur(onNameChanged);
   messageField.keypress(onMessageChanged);
+  // disable the message box by default until they enter a name
   messageField.attr("disabled", "true");
   messageField.attr("placeholder", "Enter a name to continue");
 
   channel = connect();
 
+  // adds pseudo classes to the post titles. Because they are created dynamically
+  // in pseudo classes, they must be added with javascript
   $('i').each(function(idx) {
     if($(this).data('css') != null)
       document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
@@ -32,10 +36,13 @@ $(document).ready(function() {
 
 $(window).load(function() {
   // horizontally center landscape pictures
+  // this has to be done in js because the top margin of the image has to be set dynamically based on how tall it is
+  // It doesn't work well because all the pictures load and then spring into place
   // $(".cbimg").each(function(i) { if($(this).width() > $(this).height()) { $(this).css('margin-top', (432 - parseInt($(".cbimg:eq(1)").css('height')))/3 + 'px') } });
 
 })
 
+// attempt to connect to imo
 function connect() {
   var client = {
     connect: onConnect,
