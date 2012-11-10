@@ -6,9 +6,11 @@ argparse==1.2.1
 billiard==2.7.3.18
 celery==3.0.12
 django-celery==3.0.11
+django-extensions==1.0.1
 flower==0.4.0
 kombu==2.4.8
 psycopg2==2.4.5
+pylibmc==1.2.3
 python-dateutil==1.5
 pytz==2012h
 redis==2.7.1

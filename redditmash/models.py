@@ -21,6 +21,7 @@ class Choice(models.Model):
 	is_active = models.BooleanField()
 	created_on = models.DateTimeField(auto_now_add=True)
 
+
 class StatsReddit(models.Model):
 	post = models.OneToOneField(Post)
 	score = models.IntegerField()

@@ -9,7 +9,7 @@ from celery.task import task, periodic_task
 from datetime import timedelta
 
 
-choices_limit = 10
+choices_limit = 5
 
 
 
@@ -17,27 +17,85 @@ choices_limit = 10
 # 
 # ==============================================================================
 
-@periodic_task
+
+@periodic_task(run_every = timedelta(seconds=30))
 def update_queue_manager():
-	new_posts = Post.objects.filter(is_active=False).filter(is_active_reddit=True)
-	old_posts = Post.objects.filter(is_active=True).filter(is_active_reddit=False)
-	current_posts = Post.objects.filter(is_active=True).filter(is_active_reddit=True)
+	deactivate_choices()
+
+	new_posts, old_posts, current_posts = categorize_posts()
 
 	# Just started
 	if not old_posts and not current_posts:
-		posts_to_compete = random.sample(new_posts, 2)
-		create_choice(posts_to_compete[0].id, posts_to_compete[1].id)
+		for p in new_posts:
+			p.is_active = True
+			p.save()
+		# Recalculate categorization
+		new_posts, old_posts, current_posts = categorize_posts()
+
+	# Start counter
+	num_choices = 0
+	if new_posts:
+		for post in new_posts:
+			create_choice(post.id, random.choice(current_posts))
+			num_choices = num_choices + 1
+
+	if old_posts:
+		for post in old_posts:
+			create_choice(post.id, random.choice(current_posts))
+			num_choices = num_choices + 1
+	
+	while num_choices < choices_limit:
+		posts_to_compete = random.sample(current_posts, 2)
+		c = create_choice(posts_to_compete[0].id, posts_to_compete[1].id)
+		if c:
+			num_choices = num_choices + 1
+
+def categorize_posts():
+	new_posts = Post.objects.filter(is_active=False).filter(is_active_reddit=True)
+	old_posts = Post.objects.filter(is_active=True).filter(is_active_reddit=False)
+	current_posts = Post.objects.filter(is_active=True).filter(is_active_reddit=True)
+	return new_posts, old_posts, current_posts
+
+def deactivate_choices():
+	choices = Choice.objects.filter(is_active=True)
+	for c in choices:
+		c.is_active=False
+
+def create_choice(pid1, pid2):
+	# Sort post ids.
+	if pid1 > pid2:
+		temp = pid1
+		pid1 = pid2
+		pid2 = temp
+	# Get or create choice
+	p1 = Post.objects.get(id=pid1)
+	p2 = Post.objects.get(id=pid2)
+	choice, created = Choice.objects.get_or_create(post_1=p1, post_2=p2,
+			defaults={'is_active': True, 'times_completed': 0}
+		)
+	# It is a new choice
+	if created:
+		return choice
+	# It is an existing choice and active
+	if choice.is_active:
+		return None
+	# It is an existing choice but not active
+	choice.is_active = True
+	choice.save()
+	return choice
 
 
-
+@periodic_task(run_every = timedelta(seconds=1))
 def choice_consumer():
+	# Get least active choice - quit if none exists
 	try:
 		choice = Choice.objects.filter(is_active=True).order_by('times_completed')[0]
 	except IndexError:
 		return
-
+	# Choose random winner and send decision for processing
 	winner = random.choice([choice.post_1, choice.post_2])
 	process_decision.delay(winner.id, choice.id)
+	return choice.id
 
 @task
 def process_decision(winner_id, choice_id):
@@ -54,9 +112,8 @@ def process_decision(winner_id, choice_id):
 
 	# Run algorithm
 	results = ELOResultCalculator(winner, loser)
-
-	winner.rating = results.winner_rating
-	loser.rating = results.loser_rating
+	winner.stats.rating = results.winner_rating
+	loser.stats.rating = results.loser_rating
 
 	# Save results
 	winner.save()
@@ -73,18 +130,18 @@ class ELOResultCalculator(object):
 		self.k = 20.0
 
 	def winner_win_probability(self):
-		return 1.0 / (10.0**((self.loser.rating - self.winner.rating) / 400.0) + 1.0)
+		return 1.0 / (10.0**((self.loser.stats.rating - self.winner.stats.rating) / 400.0) + 1.0)
 
 	def loser_win_probability(self):
-		return 1.0 / (10.0**((self.winner.rating - self.loser.rating) / 400.0) + 1.0)
+		return 1.0 / (10.0**((self.winner.stats.rating - self.loser.stats.rating) / 400.0) + 1.0)
 
 	@property
 	def winner_rating(self):
-		return self.winner.rating + (self.k * (1.0 - self.winner_win_probability()))
+		return self.winner.stats.rating + (self.k * (1.0 - self.winner_win_probability()))
 
 	@property
 	def loser_rating(self):
-		return self.loser.rating + (self.k * (0.0 - self.loser_win_probability()))
+		return self.loser.stats.rating + (self.k * (0.0 - self.loser_win_probability()))
 
 @task
 def calculate_rank():
@@ -93,9 +150,12 @@ def calculate_rank():
 		s = p.stats
 		s.rank = idx
 		s.save()
+		if idx >= 25:
+			p.is_active = False
+			p.save()
 
 
-@periodic_task(run_every = timedelta(seconds=60))
+@periodic_task(run_every = timedelta(minutes=5))
 def delete_unused_posts():
 	unused_posts = Post.objects.filter(is_active=False).filter(is_active_reddit=False)
 	unused_posts.delete()
@@ -107,7 +167,7 @@ def delete_unused_posts():
 # UPDATE POSTS FROM REDDIT
 #
 # ==============================================================================
-@periodic_task(run_every = timedelta(seconds=30))
+@periodic_task(run_every = timedelta(seconds=25))
 def get_posts():
 	"""Get the latest 25 posts on the reddit homepage. Returns a list of raw un-parsed posts.
 	"""
@@ -143,16 +203,26 @@ def parse_posts():
 
 	# Check for existence
 	if not listing:
-		return None
+		return 'qwerty?'
 
 	# Send post save tasks
+	active_reddit_post_ids = []
 	rank = 0
 	for post in listing:
 		pp = PostParser(post, rank)
 		if pp.is_image():
-			cache.set('parsed_' + str(pp.id), pp, 30)
+			active_reddit_post_ids.append(pp.id)
+			cache.set('parsed_' + str(pp.id), pp, 300)
 			save_post.delay(pp.id)
 			rank = rank + 1
+			if rank >= 25:
+				break
+
+	# Update reddit post status
+	for p in Post.objects.filter(is_active_reddit=True):
+		if p.id not in active_reddit_post_ids:
+			p.is_active_reddit = False
+			p.save()
 
 	# Delete listing from cache
 	cache.delete('new_listing')
@@ -175,20 +245,25 @@ def save_post(parsed_post_id):
 			p.url = parsed_post.url
 			p.author = parsed_post.author
 		stats_r = p.statsreddit
+		stats = p.stats
 
 	except Post.DoesNotExist:
 		# Create post
 		p = Post(id=parsed_post.id, title=parsed_post.title, author=parsed_post.author, url=parsed_post.url, created_on_reddit=parsed_post.created_on, is_active=False, is_active_reddit=True)
 		stats_r = StatsReddit(post=p)
+		stats = Stats(post=p, rank=-1, rating=1600)
 
 	# Save updated models
 	p.save()
+	stats.save()
 	stats_r.score = parsed_post.score
 	stats_r.rank = parsed_post.rank
 	stats_r.save()
 
 	# Delete post from cache
 	cache.delete('parsed_' + parsed_post.id)
+
+	return p.id
 
 
 class PostParser(object):
@@ -249,7 +324,7 @@ class PostParser(object):
 		return self.post['edited']
 
 	def is_image(self):
-		if ('jpg' or 'png' or 'gif') in self.url[-5:]:
+		if ('jpg' or 'png' or 'gif' or 'jpeg') in self.url[-6:]:
 			return True
 		return False
 # 

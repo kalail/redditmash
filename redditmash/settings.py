@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'south',
     'djcelery',
     'redditmash',
+    'django_extensions',
 )
 
 # Set up simple master logger
