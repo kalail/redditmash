@@ -18,6 +18,8 @@ DATABASES = {
 STATIC_URL = 'https://s3.amazonaws.com/redditmash_static/'
 
 
+CELERYBEAT_SCHEDULER = " djcelery.schedulers.DatabaseScheduler"
+
 
 # Protected variables
 SECRET_KEY = os.environ.get("SECRET_KEY")
