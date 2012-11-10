@@ -1,11 +1,18 @@
+import hashlib
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from redditmash.models import Post, StatsReddit, Stats, Choice
-import hashlib
+from django.core.cache import cache
+
 
 def index(request):
+	# if not request.session.get('u_id', None):
+	# 	for i in range(10000):
+	# 		if i not in cache.get('u_ids'):
+	# 	request.session.get
+	# cache.set('u_ids', [], 10*60)
 	# POST request
 	# ------------------------------------------------
 	if request.is_ajax() and request.method == 'POST':
@@ -61,7 +68,9 @@ def index(request):
 		'data_value': str(hash(post_2.title))[:7],
 		'url': post_2.url
 	}
-	return render_to_response('index.html', {'post_1': post_1_send, 'post_2': post_2_send},context_instance=RequestContext(request))
+	ch_id = get_channel_id(choice_to_use.id)
+	# u_id = hash(request.session.)
+	return render_to_response('index.html', {'post_1': post_1_send, 'post_2': post_2_send, 'ch_id': ch_id},context_instance=RequestContext(request))
 
 def rankings(request):
 	posts = Post.objects.filter(is_active=True).order_by('stats__rank')[:25]
@@ -82,3 +91,7 @@ def rankings(request):
 			'url': p.url,
 		})
 	return render_to_response('rankings.html', {'posts': posts_send, 'reddit_posts': reddit_posts_send}, context_instance=RequestContext(request))
+
+
+def get_channel_id(choice_id):
+	return hash('60031000000' + str(choice_id))
