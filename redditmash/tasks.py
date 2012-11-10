@@ -31,7 +31,8 @@ def update_queue_manager():
 
 
 def choice_consumer():
-	choice = Choice.objects.filter(is_active=True).order_by('times_completed')[0]
+	try:
+		choice = Choice.objects.filter(is_active=True).order_by('times_completed')[0]
 	except IndexError:
 		return
 
@@ -248,6 +249,8 @@ class PostParser(object):
 		return self.post['edited']
 
 	def is_image(self):
-		if ('jpg' or 'png' or 'gif') in self.url[-5:]
+		if ('jpg' or 'png' or 'gif') in self.url[-5:]:
+			return True
+		return False
 # 
 # ==============================================================================

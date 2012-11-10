@@ -22,11 +22,21 @@ def index(request):
 		request.session['choices_sent'] = []
 
 	choices_active = Choice.objects.filter(is_active=True).order_by('-times_completed')
+	
+	# If there are no available choices render error page
+	if not choices_active:
+		return render_to_response('index_no_data.html', context_instance=RequestContext(request))
+
+	# Default case - least active page
+	least_active_idx = len(choices_active) - 1
+	choice_to_use = choices_active[least_active_idx]
+
+	# Get most active choice for chance of chat overlap
 	for c in choices_active:
 		if c.id not in request.session['choices_sent']:
-			choice = c
+			choice_to_use = c
 			break
 	# TODO Send template variables
-	request.session['choices_sent'].append(choice.id)
+	request.session['choices_sent'].append(choice_to_use.id)
 	request.session.modified = True
 	return render_to_response('index.html', context_instance=RequestContext(request))

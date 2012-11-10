@@ -1,11 +1,5 @@
 from django.db import models
 
-class Choice(models.Model):
-	post_1 = models.ForeignKey(Post)
-	post_2 = models.ForeignKey(Post)
-	times_completed = models.IntegerField()
-	is_active = models.BooleanField()
-	created_on = models.DateTimeField(auto_now_add=True)
 
 class Post(models.Model):
 	id = models.CharField(max_length=32, primary_key=True)
@@ -19,6 +13,13 @@ class Post(models.Model):
 
 	def __unicode__(self):
 		return self.title
+
+class Choice(models.Model):
+	post_1 = models.ForeignKey(Post, related_name='post_1')
+	post_2 = models.ForeignKey(Post, related_name='post_2')
+	times_completed = models.IntegerField()
+	is_active = models.BooleanField()
+	created_on = models.DateTimeField(auto_now_add=True)
 
 class StatsReddit(models.Model):
 	post = models.OneToOneField(Post)
