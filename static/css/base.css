@@ -23,7 +23,7 @@ header
   margin-top: -24px !important;
 }
 
-.chatbox
+.chat-box
 {
   overflow: scroll;
   width: 844px !important;
@@ -32,8 +32,13 @@ header
 .chat li
 {
   width: 1250px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.chat td
+{
+  text-align: left;
 }
 
 .chat-input
@@ -44,6 +49,12 @@ header
   height: 20px;
   width: 700px;
   left: 136px;
+}
+
+.chat-div
+{
+  overflow: scroll;
+  height: 381px;
 }
 
 .chat-input-name

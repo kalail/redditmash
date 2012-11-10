@@ -24,13 +24,18 @@ $(document).ready(function() {
 
 function connect() {
   var client = {
-    connect: onConnect
+    connect: onConnect,
+    event_queue: onMessage
   };
   return new IMO.Channel(client);
 }
 
 function onConnect() {
-  // channel.subscribe([{"type": "event_queue", "name": "redditmash"}], 0);
+  channel.subscribe([{"type": "event_queue", "name": "redditmash"}], 0);
+}
+
+function onMessage(name, event) {
+  insertChatMessage(event.object.message);
 }
 
 function onNameChanged(event) {
@@ -40,7 +45,6 @@ function onNameChanged(event) {
       "redditmash",
       {"object": {"message": nameField.val() + " joined the chat."}}
     );
-    alert('Broadcasted Join');
   }
   if(nameField.val() == "") {
     messageField.attr("disabled", "");
@@ -56,7 +60,20 @@ function onNameChanged(event) {
 }
 
 function onMessageChanged(event) {
+  if(messageField.val() != "" && event.keyCode == 13) {
+    channel.event_queue(
+      "redditmash",
+      {"object": {"message": nameField.val() + ": " + messageField.val()}}
+    );
+    messageField.val("");
+    return false;
+  }
 
+  return event.keyCode != 13;
+}
+
+function insertChatMessage(message) {
+  $('.chat-table > tbody:last').append('<tr><td>' + message + '</td></tr>');
 }
 
 function leftVoteButtonClicked() {
