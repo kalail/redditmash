@@ -1,20 +1,20 @@
 body {
-    background-color: #f6f6f6;
-    background-image: -webkit-linear-gradient(left, hsla(0,0%,0%,0) 0%, hsla(0,0%,0%,0) 50%,
-                      hsla(0,0%,0%,.015) 50%, hsla(0,0%,0%,.015) 100%),
-                      -webkit-radial-gradient(hsla(0,0%,0%,.05) 10%, transparent 15%),
-                      -webkit-linear-gradient(hsla(0,0%,0%,.2) 0%, hsla(0,0%,100%,0) 100%);
-    background-position: 50% 50%, 50% 50%, 50% 0%;
-    background-repeat: repeat, repeat, no-repeat;
-    background-size: 20px 20px, 10px 10px, 100% 25px;
-    left: -10px;
-    margin: 0 auto;
-    margin-left: 15px;
-    margin-top: 30px;
-    padding: 0 50px;
-    padding-left: 0px;
-    position: relative;
-    width: 960px;
+     background-color: #333;
+    background-image: -webkit-radial-gradient(circle, hsla(0,0%,100%,.1), hsla(0,0%,0%,.25)),
+                      -webkit-radial-gradient(circle, hsla(0,0%,0%,.5) 25%, transparent 25%),
+                      -webkit-radial-gradient(circle, hsla(0,0%,100%,.05) 30%, transparent 30%);
+    background-position: 50% 75%, 50% 0, 50% .1em;
+    background-repeat: no-repeat, repeat, repeat;
+    background-size: 150% 150%, .5em .5em, .5em .5em;
+    font-size: 100%;
+    padding-bottom: 1.5em;
+}
+
+header
+{
+  margin-left: auto;
+  margin-right: auto;
+  width: 302px;
 }
 
 h1 {
@@ -28,8 +28,8 @@ h1 {
 
 .gallery figure {
     float: left;
-    height: 200px;
-    margin: 0 0 20px 20px;
+    height: 150px;
+    margin: 0 0 0px 20px;
     padding: 0;
     position: relative;
     -webkit-perspective: 1000;

@@ -9,6 +9,7 @@
     list-style: none;
     text-align: center;
     vertical-align: middle;
+    width: 1200px;
 }
 .cbli {
     background-color: #f6f6f6;
@@ -26,7 +27,8 @@
     padding-top: 1.5em;
     position: relative;
     vertical-align: bottom;
-    width: 18em;
+    width: 600px;
+    height: 400px;
     -webkit-filter: drop-shadow(0 2px 3px hsla(0,0%,0%,.25));
 }
 .cbli:after,
