@@ -35,7 +35,7 @@ def index(request):
 
 	# Get ordered list of available choices
 	choices_active = Choice.objects.filter(is_active=True).order_by('-times_completed')
-	
+
 	# If there are no available choices render error page
 	if not choices_active:
 		return render_to_response('index_no_data.html', context_instance=RequestContext(request))
@@ -53,13 +53,13 @@ def index(request):
 	request.session['choices_sent'].append(choice_to_use.id)
 	request.session['last_sent_choice_id'] = choice_to_use.id
 	request.session.modified = True
-	
+
 	# Set template variables
 	post_1 = choice_to_use.post_1
 	post_1_send = {
 		'title': post_1.title,
 		'data_value': 'a' + str(hash(post_1.title))[:7],
-		'url': post_1.url
+		'url': post_1.url,
 		'id': post_1.id
 	}
 
@@ -67,7 +67,7 @@ def index(request):
 	post_2_send = {
 		'title': post_2.title,
 		'data_value': 'a' + str(hash(post_2.title))[:7],
-		'url': post_2.url
+		'url': post_2.url,
 		'id': post_2.id
 	}
 	ch_id = get_channel_id(choice_to_use.id)
