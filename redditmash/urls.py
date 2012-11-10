@@ -4,6 +4,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # url(r'^$', 'redditmash.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'redditmash.views.index'),
 )
