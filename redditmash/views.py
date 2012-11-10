@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from redditmash.models import Post, StatsReddit, Stats, Choice
+import hashlib
 
 def index(request):
 	# POST request
@@ -47,4 +48,21 @@ def index(request):
 	return render_to_response('index.html', context_instance=RequestContext(request))
 
 def rankings(request):
-	return render_to_response('rankings.html', context_instance=RequestContext(request))
+	posts = Post.objects.filter(is_active=True).order_by('stats__rank')[:25]
+	posts_send = []
+	for p in posts:
+		posts_send.append({
+			'title': p.title,
+			'data-value': hashlib.md5(p.title).hexdigest()[:7],
+			'url': p.url,
+		})
+
+	reddit_posts = Post.objects.filter(is_active_reddit=True).order_by('statsreddit__rank')[:25]
+	reddit_posts_send = []
+	for p in reddit_posts:
+		reddit_posts_send.append({
+			'title': p.title,
+			'data-value': hashlib.md5(p.title).hexdigest()[:7],
+			'url': p.url,
+		})
+	return render_to_response('rankings.html', {'posts': posts_send, 'reddit_posts': reddit_posts_send}, context_instance=RequestContext(request))
