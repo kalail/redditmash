@@ -20,7 +20,14 @@ $(document).ready(function() {
   messageField.attr("placeholder", "Enter a name to continue");
 
   channel = connect();
+
 });
+
+$(window).load(function() {
+  // horizontally center landscape pictures
+  // $(".cbimg").each(function(i) { if($(this).width() > $(this).height()) { $(this).css('margin-top', (432 - parseInt($(".cbimg:eq(1)").css('height')))/3 + 'px') } });
+
+})
 
 function connect() {
   var client = {

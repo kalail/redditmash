@@ -16,7 +16,8 @@
 
 .cbimg
 {
-    height: 384px;
+    max-height: 384px;
+    max-width: 369px;
 }
 
 .content {
@@ -26,11 +27,12 @@
     width: 900px;
 }
 .cbul {
-    display: table-cell;
+    display: inline;
     list-style: none;
     text-align: center;
     vertical-align: middle;
     width: 850px;
+    margin: 0px;
 }
 .cbli {
     background-color: #f6f6f6;
