@@ -4,6 +4,7 @@ var nameField;
 var messageField;
 var channel;
 var hasBroadcastedJoined = false;
+var lastInsertedMessageTime = new Date(0);
 
 $(document).ready(function() {
   leftVoteButton = $("#left-vote-button");
@@ -47,6 +48,12 @@ function onConnect() {
 }
 
 function onMessage(name, event) {
+  var messageTime = new Date(0);
+  messageTime.setUTCSeconds(event.timestamp);
+  if(messageTime.getMinutes() != lastInsertedMessageTime.getMinutes()) {
+    insertTimeMessage(messageTime.toLocaleTimeString());
+  }
+  lastInsertedMessageTime = messageTime;
   insertChatMessage(event.object.message);
 }
 
@@ -88,10 +95,28 @@ function insertChatMessage(message) {
   $('.chat-table > tbody:last').append('<tr><td>' + message + '</td></tr>');
 }
 
+function insertTimeMessage(message) {
+  $('.chat-table > tbody:last').append('<tr><td class="chat-time-message">' + message + '</td></tr>');
+}
+
+
 function leftVoteButtonClicked() {
   return false;
 }
 
 function rightVoteButtonClicked() {
   return false;
+}
+
+String.prototype.toHHMMSS = function () {
+    sec_numb    = parseInt(this);
+    var hours   = Math.floor(sec_numb / 3600);
+    var minutes = Math.floor((sec_numb - (hours * 3600)) / 60);
+    var seconds = sec_numb - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    var time    = hours+':'+minutes+':'+seconds;
+    return time;
 }
