@@ -126,3 +126,6 @@ LOGGING = {
 import djcelery
 djcelery.setup_loader()
 CELERY_RESULT_BACKEND = 'redis'
+
+# Session settings
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'

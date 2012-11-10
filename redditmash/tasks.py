@@ -1,20 +1,118 @@
 import requests
 import datetime
+import random
+import math
 from django.core.cache import cache
-from redditmash.models import Post, StatsReddit, Stats
+from redditmash.models import Post, StatsReddit, Stats, Choice
 from requests.exceptions import RequestException
 from celery.task import task, periodic_task
 from datetime import timedelta
 
 
+choices_limit = 10
 
 
-@periodic_task(run_every = timedelta(seconds=10))
+
+# PROCESS / PREPARE LOCAL RANKS
+# 
+# ==============================================================================
+
+@periodic_task
+def update_queue_manager():
+	new_posts = Post.objects.filter(is_active=False).filter(is_active_reddit=True)
+	old_posts = Post.objects.filter(is_active=True).filter(is_active_reddit=False)
+	current_posts = Post.objects.filter(is_active=True).filter(is_active_reddit=True)
+
+	# Just started
+	if not old_posts and not current_posts:
+		posts_to_compete = random.sample(new_posts, 2)
+		create_choice(posts_to_compete[0].id, posts_to_compete[1].id)
+
+
+
+def choice_consumer():
+	try:
+		choice = Choice.objects.filter(is_active=True).order_by('times_completed')[0]
+	except IndexError:
+		return
+
+	winner = random.choice([choice.post_1, choice.post_2])
+	process_decision.delay(winner.id, choice.id)
+
+@task
+def process_decision(winner_id, choice_id):
+	"""Make, process and save decision to database
+	"""
+	# Get objects
+	winner = Post.objects.get(id=winner_id)
+	choice = Choice.objects.get(id=choice_id)
+	loser = choice.post_2 if winner_id == choice.post_1.id else choice.post_1
+
+	# Update choice
+	choice.times_completed = choice.times_completed + 1
+	choice.save()
+
+	# Run algorithm
+	results = ELOResultCalculator(winner, loser)
+
+	winner.rating = results.winner_rating
+	loser.rating = results.loser_rating
+
+	# Save results
+	winner.save()
+	loser.save()
+
+	# Recalculate rank
+	calculate_rank.delay()
+
+
+class ELOResultCalculator(object):
+	def __init__(self, winner, loser):
+		self.winner = winner
+		self.loser = loser
+		self.k = 20.0
+
+	def winner_win_probability(self):
+		return 1.0 / (10.0**((self.loser.rating - self.winner.rating) / 400.0) + 1.0)
+
+	def loser_win_probability(self):
+		return 1.0 / (10.0**((self.winner.rating - self.loser.rating) / 400.0) + 1.0)
+
+	@property
+	def winner_rating(self):
+		return self.winner.rating + (self.k * (1.0 - self.winner_win_probability()))
+
+	@property
+	def loser_rating(self):
+		return self.loser.rating + (self.k * (0.0 - self.loser_win_probability()))
+
+@task
+def calculate_rank():
+	posts = Post.objects.filter(is_active=True).order_by('-stats__rating')
+	for idx, p in enumerate(posts):
+		s = p.stats
+		s.rank = idx
+		s.save()
+
+
+@periodic_task(run_every = timedelta(seconds=60))
+def delete_unused_posts():
+	unused_posts = Post.objects.filter(is_active=False).filter(is_active_reddit=False)
+	unused_posts.delete()
+# 
+# ==============================================================================
+
+
+
+# UPDATE POSTS FROM REDDIT
+#
+# ==============================================================================
+@periodic_task(run_every = timedelta(seconds=30))
 def get_posts():
-	"""Get the latest 100 posts on the reddit homepage. Returns a list of raw un-parsed posts.
+	"""Get the latest 25 posts on the reddit homepage. Returns a list of raw un-parsed posts.
 	"""
 
-	url = 'http://www.reddit.com/.json?limit=1'
+	url = 'http://www.reddit.com/r/pics/.json?limit=100'
 	headers = {
 		'User-Agent': 'redditmash'
 	}
@@ -48,10 +146,13 @@ def parse_posts():
 		return None
 
 	# Send post save tasks
-	for rank, post in enumerate(listing):
+	rank = 0
+	for post in listing:
 		pp = PostParser(post, rank)
-		cache.set('parsed_' + str(pp.id), pp, 30)
-		save_post.delay(pp.id)
+		if pp.is_image():
+			cache.set('parsed_' + str(pp.id), pp, 30)
+			save_post.delay(pp.id)
+			rank = rank + 1
 
 	# Delete listing from cache
 	cache.delete('new_listing')
@@ -68,6 +169,7 @@ def save_post(parsed_post_id):
 	try:
 		p = Post.objects.get(id=parsed_post.id)
 		# Update attributes
+		p.is_active_reddit = True
 		if parsed_post.edited == True:
 			p.title = parsed_post.title
 			p.url = parsed_post.url
@@ -76,7 +178,7 @@ def save_post(parsed_post_id):
 
 	except Post.DoesNotExist:
 		# Create post
-		p = Post(id=parsed_post.id, title=parsed_post.title, author=parsed_post.author, url=parsed_post.url, created_on_reddit=parsed_post.created_on)
+		p = Post(id=parsed_post.id, title=parsed_post.title, author=parsed_post.author, url=parsed_post.url, created_on_reddit=parsed_post.created_on, is_active=False, is_active_reddit=True)
 		stats_r = StatsReddit(post=p)
 
 	# Save updated models
@@ -145,3 +247,10 @@ class PostParser(object):
 	@property
 	def edited(self):
 		return self.post['edited']
+
+	def is_image(self):
+		if ('jpg' or 'png' or 'gif') in self.url[-5:]:
+			return True
+		return False
+# 
+# ==============================================================================
