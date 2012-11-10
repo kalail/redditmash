@@ -1,0 +1,161 @@
+body {
+    background-color: #333;
+    background-image: -webkit-radial-gradient(circle, hsla(0,0%,100%,.1), hsla(0,0%,0%,.25)),
+                      -webkit-radial-gradient(circle, hsla(0,0%,0%,.5) 25%, transparent 25%),
+                      -webkit-radial-gradient(circle, hsla(0,0%,100%,.05) 30%, transparent 30%);
+    background-position: 50% 75%, 50% 0, 50% .1em;
+    background-size: 150% 150%, .5em .5em, .5em .5em;
+    font-size: 100%;
+    padding-bottom: 20em;
+    margin: auto;
+    text-align: center;
+    height: 542px;
+}
+
+header
+{
+  margin-left: 750px;
+  width: 302px;
+}
+
+.chat
+{
+  margin-top: -24px !important;
+}
+
+.chat-box
+{
+  overflow: scroll;
+  width: 844px !important;
+}
+
+.chat li
+{
+  width: 1250px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.chat td
+{
+  text-align: left;
+}
+
+.chat-input
+{
+  resize: none;
+  position: absolute;
+  top: 406px;
+  height: 20px;
+  width: 700px;
+  left: 136px;
+}
+
+.chat-div
+{
+  overflow: scroll;
+  height: 381px;
+}
+
+.chat-input-name
+{
+  resize: none;
+  position: absolute;
+  top: 406px;
+  left: 6px;
+  height: 20px;
+  width: 100px;
+}
+
+.sidebar
+{
+  position: absolute;
+  left: -300px;
+}
+
+.sidebar li
+{
+  width: 350px;
+  top: 149px;
+  left: -134px;
+}
+
+.gallery
+{
+  height: 69px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 181px;
+}
+
+.gallery h1 {
+    color: #333;
+    font: 75px/80px Abel, sans-serif;
+    text-align: center;
+    text-shadow: 0 1px 1px hsla(0,0%,100%,.25);
+}
+
+/* Gallery */
+
+.gallery figure {
+    float: left;
+    height: 69px;
+    margin: 0 0 20px 20px;
+    padding: 0;
+    position: relative;
+    -webkit-perspective: 1000;
+    -webkit-transition: all 1s ease;
+}
+.gallery a {
+    text-decoration: none;
+}
+.gallery img {
+    background: #111;
+    display: block;
+    height: 90px;
+    width: 181px;
+    -webkit-box-shadow: 0 5px 15px -5px hsla(0,0%,0%,.5);
+    -webkit-transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 100%;
+    -webkit-transition: all 1s ease;
+}
+.gallery figcaption {
+    background: #000;
+    color: #f6f6f6;
+    display: block;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    width: 161px;
+    z-index: -1;
+    -webkit-box-shadow: 0 0 0 0 hsla(0,0%,0%,0);
+    -webkit-transform: rotateX(-90deg);
+    -webkit-transform-origin: 50% 0%;
+    -webkit-transition: all 1s ease;
+}
+.gallery h3 {
+    font: bold 1.25em/1 sans-serif;
+    margin-bottom: 1em;
+}
+.gallery figure:hover {
+    -webkit-transform: translate(0, -150px);
+}
+.gallery figure:hover img {
+    -webkit-box-shadow: 0 0 0 0 hsla(0,0%,0%,0);
+    -webkit-transform: rotateX(90deg);
+}
+.gallery figure:hover figcaption {
+    background: #111;
+    -webkit-box-shadow: 0 30px 15px -20px hsla(0,0%,0%,.5);
+    -webkit-transform: rotateX(0deg);
+}
+
+/* Footer */
+
+footer p {
+    color: #aaa;
+    font: 16px/100px georgia, serif;
+    text-align: center;
+    text-shadow: 0 1px 1px hsla(0,0%,100%,.75);
+}​

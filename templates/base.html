@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/base.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/contentbox.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/boxshadow.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/sidebar.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}css/page_curl.css">
+    {% block css %}{% endblock css %}
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://apps.imoapi.com/imo.im/api/2/imoapi-min.js"></script>
+    <script src="{{STATIC_URL}}js/redditmash.js"></script>
+    {% block js %}{% endblock js %}
+  </head>
+
+  <body>
+    <div class="gallery">
+      <figure>
+        <a href="#">
+            <img src="{{STATIC_URL}}/img/reddit_logo_small.png" alt="">
+            <figcaption>
+              <p><br><br><br>Gabriel Peal<br>Kashif Malik</p>
+          </figcaption>
+        </a>
+      </figure>
+    </div>
+    <!-- <div class="sidebar">
+      <ul class="cbul">
+        <li class="cbli">
+          <div class="box drop-shadow">
+            <div class="sidebar-content">
+                <p>This is a title of a post</p>
+                <img class="sidebar-img" src="http://i.imgur.com/iTAx5.jpg">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div> -->
+    <div class="content">
+      <ul class="cbul">
+        <li class="cbli">
+          <i class="icon title1"></i>
+          <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/qChpi.jpg">
+          <a class="cba" id="left-vote-button" href="javascript: void(0)">Vote</a>
+        </li>
+        <li class="cbli">
+          <i class="icon title2"></i>
+          <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/MfeqL.jpg">
+          <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="content chat">
+      <ul class="cbul">
+        <li class="cbli chat-box">
+          <div class="chat-div">
+            <table class="chat-table">
+              <tbody class="chat-messages">
+              </tbody>
+            </table>
+        </div>
+          <textarea class="chat-input-name" placeholder="Name"></textarea>
+          <textarea class="chat-input" placeholder="Message"></textarea>
+        </li>
+      </ul>
+    </div>
+
+  </body>
+
+</html>

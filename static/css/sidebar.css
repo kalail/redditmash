@@ -1,0 +1,17 @@
+.sidebar-img
+{
+  height: 75px;
+  width: auto;
+}
+
+.sidebar-content p
+{
+  width: 300px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.sidebar-content img
+{
+  height: 220px;
+}
