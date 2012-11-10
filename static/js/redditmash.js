@@ -48,6 +48,8 @@ $(document).ready(function() {
     $("#navbar-compare").addClass("deselected");
   }
 
+  // set up the ajax with csrf tokens
+  prepare_ajax();
 
 });
 
@@ -138,17 +140,11 @@ function rightVoteButtonClicked() {
 }
 
 function submitVote(button, id) {
-  $.ajaxSetup ({
-        cache: false
-  });
-  var ajax_load = '<img src="/static/img/loader.gif" alt="Loading..." style="width: 24px">';
-  //  load() functions
-  var loadUrl = "/";
-  button.html(ajax_load).load(loadUrl, null, function(response, status, xhr) {
-    if (status == "error") {
-      var msg = "Sorry but there was an error: ";
-      $("#error").html(msg + xhr.status + " " + xhr.statusText);
-    } else {
+  $.ajax({
+    type: 'POST',
+    url: '/',
+    data: {winner_id: id},
+    success: function(msg) {
       location.reload();
     }
   });
