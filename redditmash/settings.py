@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'south',
     'djcelery',
+    'redditmash',
 )
 
 # Set up simple master logger
