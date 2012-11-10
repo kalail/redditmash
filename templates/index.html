@@ -4,15 +4,17 @@
 {% endblock js %}
 {% block content %}
 
-<div class="content">
+<div class="content" data-imo-ch={{ch_id}} data-post-1-id={{post_1.id}} data-post-2-id={{post_2.id}}>
   <ul class="cbul">
     <li class="cbli">
-      <i class="icon {{ post_1.data_value }}" data-css="{{ post_1.data_value }}" data-title="{{ post_1.title }}"></i>
+      <!-- <i class="icon {{ post_1.data_value }}" data-css="{{ post_1.data_value }}" data-title="{{ post_1.title }}"></i> -->
+      <h3>{{ post_2.title }}<h3>
       <img class="cbimg page-curl shadow-bottom" src="{{ post_1.url }}">
       <a class="cba" id="left-vote-button" href="javascript: void(0)">Vote</a>
     </li>
     <li class="cbli">
-      <i class="icon {{ post_2.data_value }}" data-css="{{ post_2.data_value }}" data-title="{{ post_2.title }}"></i>
+      <!-- <i class="icon {{ post_2.data_value }}" data-css="{{ post_2.data_value }}" data-title="{{ post_2.title }}"></i> -->
+      <h3>{{ post_2.title }}<h3>
       <img class="cbimg page-curl shadow-bottom" src="{{ post_2.url }}">
       <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
     </li>

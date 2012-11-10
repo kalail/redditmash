@@ -22,7 +22,6 @@ $(document).ready(function() {
   // disable the message box by default until they enter a name
   messageField.attr("disabled", "true");
   messageField.attr("placeholder", "Enter a name to continue");
-
   try
   {
     channel = connect();
@@ -30,10 +29,14 @@ $(document).ready(function() {
 
   // adds pseudo classes to the post titles. Because they are created dynamically
   // in pseudo classes, they must be added with javascript
-  /*$('i').each(function(idx) {
+  $('i').each(function(idx) {
     if($(this).data('css') != null)
-      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
-  });*/
+      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; font-size: 3px}', 0);
+      if($(this).data('title').length > 40)
+      {
+        // document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { font-size: 5px; }', 0);
+      }
+  });
 
   // adds highlight to navbar link
   if(/rankings/.exec(window.location.pathname))
@@ -44,6 +47,7 @@ $(document).ready(function() {
     $("#navbar-rankings").addClass("selected");
     $("#navbar-compare").addClass("deselected");
   }
+
 
 });
 
@@ -124,11 +128,30 @@ function insertTimeMessage(message) {
 
 
 function leftVoteButtonClicked() {
+  submitVote(leftVoteButton, $("body").data("post-1-id"));
   return false;
 }
 
 function rightVoteButtonClicked() {
+  submitVote(rightVoteButton, $("body").data("post-2-id"));
   return false;
+}
+
+function submitVote(button, id) {
+  $.ajaxSetup ({
+        cache: false
+  });
+  var ajax_load = '<div id="spinner" class="active"><span id="ball_1" class="spinner_ball"></span><span id="ball_2" class="spinner_ball"></span><span id="ball_3" class="spinner_ball"></span></div>';
+  //  load() functions
+  var loadUrl = "/index";
+  button.html(ajax_load).load(function(response, status, xhr) {
+    if (status == "error") {
+      var msg = "Sorry but there was an error: ";
+      $("#error").html(msg + xhr.status + " " + xhr.statusText);
+    } else {
+      window.loation.reload();
+    }
+  });
 }
 
 String.prototype.toHHMMSS = function () {
