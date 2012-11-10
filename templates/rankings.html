@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content">
+  <ul class="cbul">
+    {% for post in posts %}
+      <li class="cbli">
+        <i class="icon {{post.title.replace(' ', '-')}}" data-title="{{string.replace(post.title, ' ', '-')}}"></i>
+        <img class="cbimg page-curl shadow-bottom" src="{{post.url}}">
+        <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock content %}

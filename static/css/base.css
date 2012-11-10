@@ -66,6 +66,13 @@ header
   width: 100px;
 }
 
+.chat-time-message
+{
+  font-style: italic;
+  font-size: 14px;
+  color: gray;
+}
+
 .sidebar
 {
   position: absolute;
