@@ -9,7 +9,7 @@ from celery.task import task, periodic_task
 from datetime import timedelta
 
 
-choices_limit = 5
+choices_limit = 15
 
 
 
@@ -47,6 +47,7 @@ def update_queue_manager():
 	while num_choices < choices_limit:
 		posts_to_compete = random.sample(current_posts, 2)
 		c = create_choice(posts_to_compete[0].id, posts_to_compete[1].id)
+		print num_choices
 		if c:
 			num_choices = num_choices + 1
 
@@ -60,6 +61,7 @@ def deactivate_choices():
 	choices = Choice.objects.filter(is_active=True)
 	for c in choices:
 		c.is_active=False
+		c.save()
 
 def create_choice(pid1, pid2):
 	# Sort post ids.
@@ -68,8 +70,11 @@ def create_choice(pid1, pid2):
 		pid1 = pid2
 		pid2 = temp
 	# Get or create choice
-	p1 = Post.objects.get(id=pid1)
-	p2 = Post.objects.get(id=pid2)
+	try:
+		p1 = Post.objects.get(id=pid1)
+		p2 = Post.objects.get(id=pid2)
+	except Post.DoesNotExist:
+		return None
 	choice, created = Choice.objects.get_or_create(post_1=p1, post_2=p2,
 			defaults={'is_active': True, 'times_completed': 0}
 		)
@@ -85,7 +90,7 @@ def create_choice(pid1, pid2):
 	return choice
 
 
-@periodic_task(run_every = timedelta(seconds=1))
+@periodic_task(run_every = timedelta(seconds=0.5))
 def choice_consumer():
 	# Get least active choice - quit if none exists
 	try:
