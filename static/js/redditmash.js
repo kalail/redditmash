@@ -23,8 +23,8 @@ $(document).ready(function() {
   channel = connect();
 
   $('i').each(function(idx) {
-    if($(this).data('title') != null)
-      document.styleSheets[1].insertRule('.'  + $(this).data('title') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
+    if($(this).data('css') != null)
+      document.styleSheets[1].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
   })
 
 });
@@ -98,6 +98,7 @@ function insertChatMessage(message) {
 
 function insertTimeMessage(message) {
   $('.chat-table > tbody:last').append('<tr><td class="chat-time-message">' + message + '</td></tr>');
+  $(".chat-div:eq(0)").scrollTop(999999);
 }
 
 

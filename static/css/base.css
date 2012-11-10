@@ -18,6 +18,13 @@ header
   width: 302px;
 }
 
+.content-col {
+    display: inline;
+    height: 100%;
+    margin: 0 auto;
+    width: 400px;
+}
+
 .chat
 {
   margin-top: -24px !important;
