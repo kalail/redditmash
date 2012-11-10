@@ -17,9 +17,16 @@ header
   width: 302px;
 }
 
+.chatbox
+{
+  overflow: scroll;
+  width: 1222px;
+}
+
 .chat li
 {
   width: 1250px;
+  padding-left: 10px;
 }
 
 .sidebar
