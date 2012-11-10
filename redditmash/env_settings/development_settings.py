@@ -1,3 +1,5 @@
+import os
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -13,7 +15,6 @@ STATIC_URL = 'https://s3.amazonaws.com/redditmash_static/'
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Redis
-import os
 import urlparse
 redis_url = urlparse.urlparse(os.environ.get('REDISTOGO_URL', 'redis://localhost'))
 BROKER_URL = os.environ.get('REDISTOGO_URL')
