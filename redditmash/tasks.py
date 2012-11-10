@@ -36,12 +36,12 @@ def update_queue_manager():
 	num_choices = 0
 	if new_posts:
 		for post in new_posts:
-			create_choice(post.id, random.choice(current_posts))
+			create_choice(post.id, random.choice(current_posts).id)
 			num_choices = num_choices + 1
 
 	if old_posts:
 		for post in old_posts:
-			create_choice(post.id, random.choice(current_posts))
+			create_choice(post.id, random.choice(current_posts).id)
 			num_choices = num_choices + 1
 	
 	while num_choices < choices_limit:
@@ -86,11 +86,12 @@ def create_choice(pid1, pid2):
 		return None
 	# It is an existing choice but not active
 	choice.is_active = True
+	choice.times_completed = 0
 	choice.save()
 	return choice
 
 
-@periodic_task(run_every = timedelta(seconds=0.5))
+@periodic_task(run_every = timedelta(seconds=2))
 def choice_consumer():
 	# Get least active choice - quit if none exists
 	try:
