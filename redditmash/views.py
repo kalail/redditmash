@@ -21,7 +21,7 @@ def index(request):
 			choice = Choice.objects.get(id = request.session['last_sent_choice_id'])
 			# Send decision
 			process_decision.delay(request.POST['winner_id'], choice.id)
-		except Choice.DoesNotExist:
+		except (Choice.DoesNotExist, KeyError):
 			# Choice is stale - Do nothing
 			pass
 		# redirect to index for next choice
