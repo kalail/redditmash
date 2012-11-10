@@ -8,7 +8,7 @@
 
 .cbimg
 {
-    height: 420px;
+    height: 384px;
 }
 
 .content {
@@ -37,11 +37,11 @@
     display: inline-block;
     font: bold 1em/1.5 sans-serif;
     margin: 1.5em 1.5em 5em;
-    padding-top: 1.5em;
+    padding-top: 11px;
     position: relative;
     vertical-align: bottom;
     width: 600px;
-    height: 500px;
+    height: 432px;
     -webkit-filter: drop-shadow(0 2px 3px hsla(0,0%,0%,.25));
 }
 .cbli:after,
@@ -126,7 +126,7 @@
     display: block;
     height: 1.5em;
     font-style: normal;
-    margin: 0 1.5em 1.5em;
+    margin: 0 14px 11px;
     position: relative;
     -webkit-transition: .25s;
 }

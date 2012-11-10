@@ -8,13 +8,23 @@ body {
     background-size: 150% 150%, .5em .5em, .5em .5em;
     font-size: 100%;
     padding-bottom: 20em;
-    padding-left: 5em;
+    margin: auto;
+    text-align: center;
 }
 
 header
 {
   margin-left: 750px;
   width: 302px;
+}
+#content
+{
+    width: 1092;
+}
+
+.chat
+{
+  margin-top: -24px !important;
 }
 
 .chatbox
@@ -42,7 +52,16 @@ header
   left: -134px;
 }
 
-h1 {
+.gallery
+{
+  height: 69px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 181px;
+}
+
+.gallery h1 {
     color: #333;
     font: 75px/80px Abel, sans-serif;
     text-align: center;
@@ -53,7 +72,7 @@ h1 {
 
 .gallery figure {
     float: left;
-    height: 150px;
+    height: 69px;
     margin: 0 0 20px 20px;
     padding: 0;
     position: relative;
@@ -66,8 +85,8 @@ h1 {
 .gallery img {
     background: #111;
     display: block;
-    height: 150px;
-    width: 302px;
+    height: 90px;
+    width: 181px;
     -webkit-box-shadow: 0 5px 15px -5px hsla(0,0%,0%,.5);
     -webkit-transform: rotateX(0deg);
     -webkit-transform-origin: 50% 100%;
@@ -80,7 +99,7 @@ h1 {
     margin: 0;
     padding: 10px;
     position: relative;
-    width: 282px;
+    width: 161px;
     z-index: -1;
     -webkit-box-shadow: 0 0 0 0 hsla(0,0%,0%,0);
     -webkit-transform: rotateX(-90deg);
