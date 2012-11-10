@@ -143,13 +143,13 @@ function submitVote(button, id) {
   });
   var ajax_load = '<img src="/static/img/loader.gif" alt="Loading..." style="width: 24px">';
   //  load() functions
-  var loadUrl = "/index";
-  button.html(ajax_load).load(function(response, status, xhr) {
+  var loadUrl = "/";
+  button.html(ajax_load).load(loadUrl, null, function(response, status, xhr) {
     if (status == "error") {
       var msg = "Sorry but there was an error: ";
       $("#error").html(msg + xhr.status + " " + xhr.statusText);
     } else {
-      window.loation.reload();
+      location.reload();
     }
   });
 }
