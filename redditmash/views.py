@@ -69,8 +69,8 @@ def index(request):
 		'url': post_2.url
 	}
 	ch_id = get_channel_id(choice_to_use.id)
-	# u_id = hash(request.session.)
-	return render_to_response('index.html', {'post_1': post_1_send, 'post_2': post_2_send, 'ch_id': ch_id},context_instance=RequestContext(request))
+	u_id = hash(request.session)
+	return render_to_response('index.html', {'post_1': post_1_send, 'post_2': post_2_send, 'ch_id': ch_id, 'u_id': u_id}, context_instance=RequestContext(request))
 
 def rankings(request):
 	posts = Post.objects.filter(is_active=True).order_by('stats__rank')[:25]
