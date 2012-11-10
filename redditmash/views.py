@@ -42,10 +42,26 @@ def index(request):
 		if c.id not in request.session['choices_sent']:
 			choice_to_use = c
 			break
-	# TODO Send template variables
+	# Update session
 	request.session['choices_sent'].append(choice_to_use.id)
+	request.session['last_sent_choice_id'] = choice_to_use.id
 	request.session.modified = True
-	return render_to_response('index.html', context_instance=RequestContext(request))
+	
+	# Set template variables
+	post_1 = choice_to_use.post_1
+	post_1_send = {
+		'title': post_1.title,
+		'data_value': str(hash(post_1.title))[:7],
+		'url': post_1.url
+	}
+
+	post_2 = choice_to_use.post_2
+	post_2_send = {
+		'title': post_2.title,
+		'data_value': str(hash(post_2.title))[:7],
+		'url': post_2.url
+	}
+	return render_to_response('index.html', {'post_1': post_1_send, 'post_2': post_2_send},context_instance=RequestContext(request))
 
 def rankings(request):
 	posts = Post.objects.filter(is_active=True).order_by('stats__rank')[:25]
@@ -53,7 +69,7 @@ def rankings(request):
 	for p in posts:
 		posts_send.append({
 			'title': p.title,
-			'data-value': hashlib.md5(p.title).hexdigest()[:7],
+			'data_value': str(hash(p.title))[:7],
 			'url': p.url,
 		})
 
@@ -62,7 +78,7 @@ def rankings(request):
 	for p in reddit_posts:
 		reddit_posts_send.append({
 			'title': p.title,
-			'data-value': hashlib.md5(p.title).hexdigest()[:7],
+			'data_value': str(hash(p.title))[:7],
 			'url': p.url,
 		})
 	return render_to_response('rankings.html', {'posts': posts_send, 'reddit_posts': reddit_posts_send}, context_instance=RequestContext(request))
