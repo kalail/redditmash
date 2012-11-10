@@ -1,4 +1,89 @@
-body
-{
-  background-image: url(../img/bg.png)
+body {
+    background-color: #f6f6f6;
+    background-image: -webkit-linear-gradient(left, hsla(0,0%,0%,0) 0%, hsla(0,0%,0%,0) 50%,
+                      hsla(0,0%,0%,.015) 50%, hsla(0,0%,0%,.015) 100%),
+                      -webkit-radial-gradient(hsla(0,0%,0%,.05) 10%, transparent 15%),
+                      -webkit-linear-gradient(hsla(0,0%,0%,.2) 0%, hsla(0,0%,100%,0) 100%);
+    background-position: 50% 50%, 50% 50%, 50% 0%;
+    background-repeat: repeat, repeat, no-repeat;
+    background-size: 20px 20px, 10px 10px, 100% 25px;
+    left: -10px;
+    margin: 0 auto;
+    margin-left: 15px;
+    margin-top: 30px;
+    padding: 0 50px;
+    padding-left: 0px;
+    position: relative;
+    width: 960px;
 }
+
+h1 {
+    color: #333;
+    font: 75px/80px Abel, sans-serif;
+    text-align: center;
+    text-shadow: 0 1px 1px hsla(0,0%,100%,.25);
+}
+
+/* Gallery */
+
+.gallery figure {
+    float: left;
+    height: 200px;
+    margin: 0 0 20px 20px;
+    padding: 0;
+    position: relative;
+    -webkit-perspective: 1000;
+    -webkit-transition: all 1s ease;
+}
+.gallery a {
+    text-decoration: none;
+}
+.gallery img {
+    background: #111;
+    display: block;
+    height: 150px;
+    width: 302px;
+    -webkit-box-shadow: 0 5px 15px -5px hsla(0,0%,0%,.5);
+    -webkit-transform: rotateX(0deg);
+    -webkit-transform-origin: 50% 100%;
+    -webkit-transition: all 1s ease;
+}
+.gallery figcaption {
+    background: #000;
+    color: #f6f6f6;
+    display: block;
+    margin: 0;
+    padding: 10px;
+    position: relative;
+    width: 282px;
+    z-index: -1;
+    -webkit-box-shadow: 0 0 0 0 hsla(0,0%,0%,0);
+    -webkit-transform: rotateX(-90deg);
+    -webkit-transform-origin: 50% 0%;
+    -webkit-transition: all 1s ease;
+}
+.gallery h3 {
+    font: bold 1.25em/1 sans-serif;
+    margin-bottom: 1em;
+}
+.gallery figure:hover {
+    -webkit-transform: translate(0, -150px);
+}
+.gallery figure:hover img {
+    -webkit-box-shadow: 0 0 0 0 hsla(0,0%,0%,0);
+    -webkit-transform: rotateX(90deg);
+}
+.gallery figure:hover figcaption {
+    background: #111;
+    -webkit-box-shadow: 0 30px 15px -20px hsla(0,0%,0%,.5);
+    -webkit-transform: rotateX(0deg);
+}
+
+/* Footer */
+
+footer p {
+    color: #aaa;
+    font: 16px/100px georgia, serif;
+    text-align: center;
+    text-shadow: 0 1px 1px hsla(0,0%,100%,.75);
+}​
