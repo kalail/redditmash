@@ -10,9 +10,6 @@
     content: 'Oh Crap! Nothing to see here!!';
 }
 
-.404-title:after {
-    content: 'Oh Crap! Nothing to see here!!';
-}
 
 .cbimg
 {
@@ -57,7 +54,7 @@
 
 .cbli-404
 {
-    width: 715px;
+    height: 271px;
 }
 
 .cbli:after,
