@@ -141,7 +141,7 @@ function submitVote(button, id) {
   $.ajaxSetup ({
         cache: false
   });
-  var ajax_load = '<div id="spinner" class="active"><span id="ball_1" class="spinner_ball"></span><span id="ball_2" class="spinner_ball"></span><span id="ball_3" class="spinner_ball"></span></div>';
+  var ajax_load = '<img src="/static/img/loader.gif" alt="Loading..." style="width: 24px">';
   //  load() functions
   var loadUrl = "/index";
   button.html(ajax_load).load(function(response, status, xhr) {
