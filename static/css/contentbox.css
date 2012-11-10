@@ -110,6 +110,7 @@
 
 .cbli:hover a {
     color: #666;
+    text-decoration: none;
 }
 .cba:active {
     background-position:50% 100%, 0 0;

@@ -4,12 +4,12 @@ body {
                       -webkit-radial-gradient(circle, hsla(0,0%,0%,.5) 25%, transparent 25%),
                       -webkit-radial-gradient(circle, hsla(0,0%,100%,.05) 30%, transparent 30%);
     background-position: 50% 75%, 50% 0, 50% .1em;
-    background-repeat: no-repeat, repeat, repeat;
     background-size: 150% 150%, .5em .5em, .5em .5em;
     font-size: 100%;
     padding-bottom: 20em;
     margin: auto;
     text-align: center;
+    height: 542px;
 }
 
 header
@@ -33,6 +33,27 @@ header
 {
   width: 1250px;
   padding-left: 10px;
+  padding-right: 10px;
+}
+
+.chat-input
+{
+  resize: none;
+  position: absolute;
+  top: 406px;
+  height: 20px;
+  width: 700px;
+  left: 136px;
+}
+
+.chat-input-name
+{
+  resize: none;
+  position: absolute;
+  top: 406px;
+  left: 6px;
+  height: 20px;
+  width: 100px;
 }
 
 .sidebar
