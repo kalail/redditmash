@@ -29,14 +29,10 @@ $(document).ready(function() {
 
   // adds pseudo classes to the post titles. Because they are created dynamically
   // in pseudo classes, they must be added with javascript
-  $('i').each(function(idx) {
+  /*$('i').each(function(idx) {
     if($(this).data('css') != null)
-      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; font-size: 3px}', 0);
-      if($(this).data('title').length > 40)
-      {
-        // document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { font-size: 5px; }', 0);
-      }
-  });
+      document.styleSheets[0].insertRule('.'  + $(this).data('css') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '";}', 0);
+  });*/
 
   // adds highlight to navbar link
   if(/rankings/.exec(window.location.pathname))
