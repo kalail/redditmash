@@ -25,7 +25,7 @@ def index(request):
 			# Choice is stale - Do nothing
 			pass
 		# redirect to index for next choice
-		return HttpResponse('200')
+		return HttpResponse()
 
 	# GET request
 	# ------------------------------------------------
