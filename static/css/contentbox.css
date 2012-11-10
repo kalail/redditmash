@@ -1,8 +1,21 @@
+.title1:after {
+    content: 'This is an example of a title of a reddit post';
+}
+
+.title2:after {
+    content: 'woohoo this hackathon is so fun go imo.im!!!';
+}
+
+.cbimg
+{
+    height: 420px;
+}
+
 .content {
     display: table;
     height: 100%;
     margin: 0 auto;
-    width: 80%;
+    width: 1300px;
 }
 .cbul {
     display: table-cell;
@@ -28,7 +41,7 @@
     position: relative;
     vertical-align: bottom;
     width: 600px;
-    height: 400px;
+    height: 500px;
     -webkit-filter: drop-shadow(0 2px 3px hsla(0,0%,0%,.25));
 }
 .cbli:after,
@@ -87,6 +100,13 @@
     -webkit-transform-origin: 50% 0;
     -webkit-transition: .1s;
 }
+
+.cbshadow {
+    box-shadow: inset 0 1px 0 hsla(0,0%,100%,1),
+                0 0 0 1px hsla(0,0%,0%,.25),
+                0 6px 10px hsla(0,0%,0%,.5);
+}
+
 .cbli:hover a {
     color: #666;
 }
@@ -135,12 +155,4 @@
     position: absolute;
     top: 0;
     width: 100%;
-}
-
-.post1:after {
-    content: 'Post 1';
-}
-
-.post2:after {
-    content: 'Post 2';
 }

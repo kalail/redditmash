@@ -1,5 +1,5 @@
 body {
-     background-color: #333;
+    background-color: #333;
     background-image: -webkit-radial-gradient(circle, hsla(0,0%,100%,.1), hsla(0,0%,0%,.25)),
                       -webkit-radial-gradient(circle, hsla(0,0%,0%,.5) 25%, transparent 25%),
                       -webkit-radial-gradient(circle, hsla(0,0%,100%,.05) 30%, transparent 30%);
@@ -7,14 +7,32 @@ body {
     background-repeat: no-repeat, repeat, repeat;
     background-size: 150% 150%, .5em .5em, .5em .5em;
     font-size: 100%;
-    padding-bottom: 1.5em;
+    padding-bottom: 20em;
+    padding-left: 5em;
 }
 
 header
 {
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 750px;
   width: 302px;
+}
+
+.chat li
+{
+  width: 1250px;
+}
+
+.sidebar
+{
+  position: absolute;
+  left: -300px;
+}
+
+.sidebar li
+{
+  width: 350px;
+  top: 149px;
+  left: -134px;
 }
 
 h1 {
@@ -29,7 +47,7 @@ h1 {
 .gallery figure {
     float: left;
     height: 150px;
-    margin: 0 0 0px 20px;
+    margin: 0 0 20px 20px;
     padding: 0;
     position: relative;
     -webkit-perspective: 1000;
