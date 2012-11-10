@@ -21,6 +21,11 @@ $(document).ready(function() {
 
   channel = connect();
 
+  $('i').each(function(idx) {
+    if($(this).data('title') != null)
+      document.styleSheets[1].insertRule('.'  + $(this).data('title') + ':after { content: "' + $(this).data('title').replace(/-/g, ' ') + '"; }', 0);
+  })
+
 });
 
 $(window).load(function() {

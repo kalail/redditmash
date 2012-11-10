@@ -2,46 +2,13 @@
 {% block content %}
 <div class="content">
   <ul class="cbul">
-    <li class="cbli">
-      <i class="icon title1"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/qChpi.jpg">
-      <a class="cba" id="left-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/KKUxP.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/MfeqL.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/KKUxP.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/MfeqL.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/MfeqL.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/KKUxP.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
-    <li class="cbli">
-      <i class="icon title2"></i>
-      <img class="cbimg page-curl shadow-bottom" src="http://i.imgur.com/MfeqL.jpg">
-      <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
-    </li>
+    {% for post in posts %}
+      <li class="cbli">
+        <i class="icon {{post.title.replace(' ', '-')}}" data-title="{{string.replace(post.title, ' ', '-')}}"></i>
+        <img class="cbimg page-curl shadow-bottom" src="{{post.url}}">
+        <a class="cba" id="right-vote-button" href="javascript: void(0)">Vote</a>
+      </li>
+    {% endfor %}
   </ul>
 </div>
 {% endblock content %}
