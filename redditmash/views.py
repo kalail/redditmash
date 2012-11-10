@@ -25,7 +25,7 @@ def index(request):
 			# Choice is stale - Do nothing
 			pass
 		# redirect to index for next choice
-		HttpResponseRedirect(reverse('redditmash.views.index'))
+		return HttpResponse('200')
 
 	# GET request
 	# ------------------------------------------------
@@ -59,14 +59,16 @@ def index(request):
 	post_1_send = {
 		'title': post_1.title,
 		'data_value': str(hash(post_1.title))[:7],
-		'url': post_1.url
+		'url': post_1.url,
+		'id': post_1.id
 	}
 
 	post_2 = choice_to_use.post_2
 	post_2_send = {
 		'title': post_2.title,
 		'data_value': str(hash(post_2.title))[:7],
-		'url': post_2.url
+		'url': post_2.url,
+		'id': post_2.id
 	}
 	ch_id = get_channel_id(choice_to_use.id)
 	u_id = hash(request.session)
