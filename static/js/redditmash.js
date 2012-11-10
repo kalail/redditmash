@@ -93,6 +93,7 @@ function onMessageChanged(event) {
 
 function insertChatMessage(message) {
   $('.chat-table > tbody:last').append('<tr><td>' + message + '</td></tr>');
+  $(".chat-div:eq(0)").scrollTop(999999);
 }
 
 function insertTimeMessage(message) {
