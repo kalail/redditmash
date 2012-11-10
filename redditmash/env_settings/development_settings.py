@@ -3,8 +3,16 @@ import os
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-import dj_database_url
-DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'dckre304j71813',
+    'HOST': 'ec2-54-243-130-196.compute-1.amazonaws.com',
+    'PORT': 5432,
+    'USER': 'mxdalonyrhwvkh',
+    'PASSWORD': 'quKP6Lg5xi4nt6RqDI5LKdD58E'
+  }
+}
 
 # URL prefix for static files.
 STATIC_URL = 'https://s3.amazonaws.com/redditmash_static/'
